@@ -1,0 +1,31 @@
+{
+    "name": "Enhance Google Search 🌟",
+    "description": "SubEngine+ is a browser extension that seamlessly integrates additional query outcomes into Google search results. It labels supplementary results as community, verified, or unverified 🚥",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "author": "Mahmoud Kandel",
+    "icons": {
+        "16": "/public/icons/icon16.png",
+        "32": "/public/icons/icon32.png",
+        "48": "/public/icons/icon48.png",
+        "128": "/public/icons/icon128.png",
+        "192": "/public/icons/icon192.png",
+        "512": "/public/icons/icon512.png"
+    },
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Enhance Google Search 🌟"
+    },
+    "permissions": [
+        "activeTab",
+        "declarativeNetRequest",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://www.google.com/search*"],
+            "js": ["index.js"]
+        }
+    ]
+}
