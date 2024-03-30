@@ -1,6 +1,6 @@
-import { IMediaDetails } from "../@types";
-import { MEDIA_CONSTANTS, IMDB_DATA } from "../constants";
-import { prepareLink } from "../utils";
+import { IMediaDetails } from "../../@types";
+import { MEDIA_CONSTANTS, IMDB_DATA } from "../../constants";
+import { prepareLink } from "../../utils";
 
 export const resultCard = (media: IMediaDetails): string => {
     const {

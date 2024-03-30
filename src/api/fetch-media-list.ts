@@ -1,10 +1,16 @@
 import axios from "axios";
 import { mediaListUrl, fetchMediaDetails } from ".";
-import { APIResponse, TMDBList, IMediaDetails, IMedia } from "../@types";
-import { MEDIA_CONSTANTS } from "../constants";
+import {
+    APIResponse,
+    TMDBList,
+    IMediaDetails,
+    IMedia,
+    ExtensionSettings,
+} from "../@types";
 
 export const fetchMediaList = async (
-    searchQuery: string
+    searchQuery: string,
+    resultsPerPage: ExtensionSettings["resultsPerPage"]
 ): Promise<IMediaDetails[]> => {
     const { data } = await axios.get<APIResponse<TMDBList>>(
         mediaListUrl(searchQuery)
@@ -37,7 +43,7 @@ export const fetchMediaList = async (
                 return false;
             }
         })
-        .slice(0, MEDIA_CONSTANTS.resultsPerPage);
+        .slice(0, resultsPerPage);
 
     return modifiedMediaDetailsList;
 };
