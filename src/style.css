@@ -1,27 +1,134 @@
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    --gray-default: #3c4043;
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
     :root {
-        color: #213547;
-        background-color: #ffffff;
+        --gray-default: #bcc0c3;
     }
-    a:hover {
-        color: #747bff;
+}
+
+.card {
+    width: 652px;
+    margin-bottom: 30px;
+    display: flex;
+    gap: 16px;
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.card_content-header {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.card_content-header:hover {
+    text-decoration: none;
+}
+
+.card_header-icon_container {
+    height: 26px;
+    width: 26px;
+    border-radius: 100%;
+}
+
+.card_header-icon_container-image {
+    height: 26px;
+    width: 26px;
+    border-radius: 100%;
+}
+
+.card_header-Content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card_header-Content--header {
+    font-size: 16px;
+    line-height: 21px;
+    color: var(--gray-default);
+}
+
+.card_header-Content--content {
+    display: flex;
+    font-size: 12px;
+    line-height: 12px;
+    color: var(--gray-default);
+    min-width: 50px;
+}
+
+.card_header-title {
+    font-size: 22px;
+    line-height: 32px;
+    text-decoration: none;
+}
+
+.card_header-description {
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--gray-default);
+}
+/*  */
+.card_image_container {
+    border-radius: 8px;
+    width: 80px;
+    height: 115px;
+}
+
+.card_image_container-image {
+    border-radius: 8px;
+    width: 80px;
+    height: 115px;
+}
+
+/********************** loading card style **********************/
+.animated-bg {
+    background-image: linear-gradient(
+        to right,
+        #f3f9fd 0%,
+        #e0f2f7 20%,
+        #d0e6f0 40%,
+        #c0dcde 60%,
+        #b0d0d3 80%,
+        #a0c4c7 100%
+    );
+    background-size: 800px 100%; /* Adjust size as needed */
+    animation: animateGradient 1s ease-in-out infinite;
+}
+
+.animated-bg-text {
+    border-radius: 5px;
+    display: inline-block;
+    margin: 0;
+    height: 16px;
+    width: 100%;
+}
+
+.card_header-title--loading {
+    width: 100px;
+}
+
+.card_header-Content--header--loading {
+    width: 80px;
+}
+
+.card_header-Content--content--loading {
+    width: 150px;
+    margin-top: 3px;
+}
+
+@keyframes animateGradient {
+    0% {
+        background-position: 0 0;
     }
-    button {
-        background-color: #f9f9f9;
+    100% {
+        background-position: -800px 0;
     }
 }
