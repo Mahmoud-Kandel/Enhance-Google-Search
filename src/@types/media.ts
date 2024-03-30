@@ -1,4 +1,4 @@
-export interface IMedia {
+interface IMedia {
     id: number;
     adult: boolean;
     poster_path: string;
@@ -9,7 +9,7 @@ export interface IMedia {
     popularity: number;
     vote_average: number;
     vote_count: number;
-    media_type: "tv" | "movie" | "person";
+    media_type: "tv" | "movie";
     original_name?: string;
     name?: string;
     origin_country?: string[];
@@ -20,4 +20,6 @@ export interface IMedia {
     release_date?: string;
 }
 
-export type TMDBList = Array<IMedia>;
+type TMDBList = Array<IMedia>;
+
+export type { IMedia, TMDBList };
