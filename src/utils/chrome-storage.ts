@@ -6,7 +6,19 @@ async function getBrowserStorageValues() {
     });
 }
 
-function setBrowserStorageValue(
+async function setBrowserStorageValue(
+    key: StorageKeys,
+    value: boolean | number,
+    secondKey: StorageKeys
+) {
+    const { [secondKey]: secondValue } = await getBrowserStorageValues();
+    chrome.storage.sync.set({
+        [secondKey]: secondValue,
+        [key]: value,
+    });
+}
+
+function setBrowserStorageValues(
     key1: StorageKeys.active,
     value1: boolean,
     key2: StorageKeys.resultsPerPage,
@@ -18,4 +30,8 @@ function setBrowserStorageValue(
     });
 }
 
-export { setBrowserStorageValue, getBrowserStorageValues };
+export {
+    setBrowserStorageValues,
+    setBrowserStorageValue,
+    getBrowserStorageValues,
+};
