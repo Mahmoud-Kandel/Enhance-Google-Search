@@ -1,21 +1,36 @@
-import { getBrowserStorageValues } from ".";
+import { getBrowserStorageValues, setBrowserStorageValues } from ".";
 import { StorageKeys, ExtensionSettings } from "../@types";
 import { EXTENSION_DEFAULT } from "../constants";
 
 export const getExtensionStorageValues =
     async (): Promise<ExtensionSettings> => {
+        let active, resultsPerPage;
+
         const {
             active: extensionActive,
             resultsPerPage: extensionResultsPerPage,
         } = EXTENSION_DEFAULT;
 
         let {
-            [StorageKeys.active]: active,
-            [StorageKeys.resultsPerPage]: resultsPerPage,
+            [StorageKeys.active]: StorageActive,
+            [StorageKeys.resultsPerPage]: StorageResultsPerPage,
         } = await getBrowserStorageValues();
 
-        active ? active : extensionActive;
-        resultsPerPage ? resultsPerPage : extensionResultsPerPage;
+        // in first Render
+        if (!StorageActive && !StorageResultsPerPage) {
+            active = extensionActive;
+            resultsPerPage = extensionResultsPerPage;
+
+            setBrowserStorageValues(
+                StorageKeys.active,
+                active,
+                StorageKeys.resultsPerPage,
+                resultsPerPage
+            );
+        } else {
+            active = StorageActive;
+            resultsPerPage = StorageResultsPerPage;
+        }
 
         return { active, resultsPerPage };
     };

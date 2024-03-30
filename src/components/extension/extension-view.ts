@@ -1,6 +1,8 @@
-import { setBrowserStorageValue } from "../../utils";
 import { StorageKeys } from "../../@types";
-import { getExtensionStorageValues } from "../../utils/";
+import {
+    getExtensionStorageValues,
+    setBrowserStorageValue,
+} from "../../utils/";
 
 export const showExtensionView = async () => {
     document.addEventListener("DOMContentLoaded", async function () {
@@ -42,19 +44,18 @@ export const showExtensionView = async () => {
             ) as HTMLInputElement;
 
         // Update the display of results per page
-        rangeInput.addEventListener("input", () => {
+        rangeInput.addEventListener("input", async () => {
             const { value } = rangeInput;
             counter.textContent = value;
-            setBrowserStorageValue(
-                StorageKeys.active,
-                active,
+            await setBrowserStorageValue(
                 StorageKeys.resultsPerPage,
-                +value
+                +value,
+                StorageKeys.active
             );
         });
 
         // Update Enable and Disable Extension
-        toggleExtension.addEventListener("change", () => {
+        toggleExtension.addEventListener("change", async () => {
             let checked = true;
             if (toggleExtension.checked) {
                 container.classList.add("active");
@@ -62,11 +63,10 @@ export const showExtensionView = async () => {
                 container.classList.remove("active");
                 checked = false;
             }
-            setBrowserStorageValue(
+            await setBrowserStorageValue(
                 StorageKeys.active,
                 checked,
-                StorageKeys.resultsPerPage,
-                resultsPerPage
+                StorageKeys.resultsPerPage
             );
         });
     });
