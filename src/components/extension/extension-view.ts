@@ -44,10 +44,10 @@ export const showExtensionView = async () => {
             ) as HTMLInputElement;
 
         // Update the display of results per page
-        rangeInput.addEventListener("input", () => {
+        rangeInput.addEventListener("input", async () => {
             const { value } = rangeInput;
             counter.textContent = value;
-            setBrowserStorageValue(
+            await setBrowserStorageValue(
                 StorageKeys.resultsPerPage,
                 +value,
                 StorageKeys.active
@@ -55,7 +55,7 @@ export const showExtensionView = async () => {
         });
 
         // Update Enable and Disable Extension
-        toggleExtension.addEventListener("change", () => {
+        toggleExtension.addEventListener("change", async () => {
             let checked = true;
             if (toggleExtension.checked) {
                 container.classList.add("active");
@@ -63,7 +63,7 @@ export const showExtensionView = async () => {
                 container.classList.remove("active");
                 checked = false;
             }
-            setBrowserStorageValue(
+            await setBrowserStorageValue(
                 StorageKeys.active,
                 checked,
                 StorageKeys.resultsPerPage
