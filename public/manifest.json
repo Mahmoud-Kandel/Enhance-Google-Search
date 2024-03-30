@@ -21,7 +21,12 @@
         {
             "matches": ["https://www.google.com/search*"],
             "js": ["assets/index.js"],
-            "css": ["assets/index.css"]
+            "css": [
+                "assets/index.css",
+                "css/loading-card.css",
+                "css/card.css",
+                "css/extension.css"
+            ]
         }
     ]
 }
