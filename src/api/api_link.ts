@@ -1,7 +1,6 @@
-// API key obtained from environment variables
-const API_KEY = import.meta.env.VITE_API_KEY;
-// The TMDb API URL
-const api_url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&include_adult=false&query=`;
+import { MEDIA_CONSTANTS } from "../constants";
+
+const api_url = `https://api.themoviedb.org/3/search/multi?api_key=${MEDIA_CONSTANTS.apiKey}&language=en-US&include_adult=false&query=`;
 
 /**
  * Base URL for making requests to The Movie Database (TMDb) API.
