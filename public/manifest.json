@@ -1,6 +1,6 @@
 {
-    "name": "Enhance Google Search 🌟",
-    "description": "SubEngine+ is a browser extension that seamlessly integrates additional query outcomes into Google search results. It labels supplementary results as community, verified, or unverified 🚥",
+    "name": "IMDB",
+    "description": "IMDB is your go-to browser extension for enhancing search engine results. Instantly access comprehensive information on movies and series without leaving your search page. 🚥",
     "version": "1.0.0",
     "manifest_version": 3,
     "author": "Mahmoud Kandel",
@@ -14,14 +14,9 @@
     },
     "action": {
         "default_popup": "index.html",
-        "default_title": "Enhance Google Search 🌟"
+        "default_title": "IMDB 🌟"
     },
-    "permissions": [
-        "activeTab",
-        "declarativeNetRequest",
-        "webRequest",
-        "webRequestBlocking"
-    ],
+    "permissions": ["storage"],
     "content_scripts": [
         {
             "matches": ["https://www.google.com/search*"],

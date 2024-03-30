@@ -1,25 +1,36 @@
-import { PageTheme } from "../@types";
+import { PageTheme, ExtensionSettings } from "../@types";
 import { fetchMediaList } from "../api";
-import { CONTAINER_CLASS, MEDIA_CONSTANTS } from "../constants";
-import { loadingCard, resultCard, notFound } from "../components";
+import { CONTAINER_CLASS } from "../constants";
+import { loadingCard, resultCard, notFound } from "../components/serp";
+import { showExtensionView } from "../components/extension";
+import { getExtensionStorageValues } from "../utils";
 
-const showLoadingCards = (container: HTMLDivElement) => {
+const showLoadingCards = (
+    container: HTMLDivElement,
+    resultsPerPage: ExtensionSettings["resultsPerPage"]
+) => {
     container.innerHTML = `
-    ${new Array(MEDIA_CONSTANTS.resultsPerPage)
+    ${new Array(resultsPerPage)
         .fill("")
         .map(() => loadingCard)
         .join("")}
     `;
 };
 
-export const showResults = async (container: HTMLDivElement) => {
+export const showResults = async (
+    container: HTMLDivElement,
+    resultsPerPage: ExtensionSettings["resultsPerPage"]
+) => {
     // Search input Value
     const searchQueryValue: string = (
         document.getElementsByTagName("textarea")[0] as HTMLTextAreaElement
     ).value;
 
     // Fetch additional search/query results from the API
-    const mediaListData = await fetchMediaList(searchQueryValue);
+    const mediaListData = await fetchMediaList(
+        searchQueryValue,
+        resultsPerPage
+    );
 
     if (mediaListData.length === 0) {
         container.innerHTML = notFound(searchQueryValue);
@@ -35,6 +46,9 @@ export const showResults = async (container: HTMLDivElement) => {
 
 // Immediately invoked function expression (IIFE) to modify search results
 (async () => {
+    // Show extension view
+    await showExtensionView();
+
     // theme Config
     const theme: PageTheme = window
         .getComputedStyle(document.body)
@@ -58,9 +72,18 @@ export const showResults = async (container: HTMLDivElement) => {
         searchResults[0].firstChild
     );
 
+    // Get Extension Settings from Storage
+    const { resultsPerPage, active } = await getExtensionStorageValues();
+
     // Show loading Ui
-    showLoadingCards(injectedResultsContainer);
+    if (active) {
+        showLoadingCards(injectedResultsContainer, resultsPerPage);
+    } else {
+        injectedResultsContainer.innerHTML = "";
+        return;
+    }
 
     // If search results are found, modify them
-    searchResults.length > 0 && (await showResults(injectedResultsContainer));
+    (searchResults.length > 0 || !active) &&
+        (await showResults(injectedResultsContainer, resultsPerPage));
 })();
