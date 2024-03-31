@@ -8,11 +8,12 @@
         "typeRoots": ["node_modules/@types"],
 
         /* Bundler mode */
-        "moduleResolution": "bundler",
+        "moduleResolution": "node",
         "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
+        "esModuleInterop": true,
 
         /* Linting */
         "strict": true,
