@@ -20,7 +20,7 @@ IMDB is your go-to browser extension for enhancing search engine results. Instan
 **Setup**
 
 -   Please first make sure that you have **Node.js** and **git** installed on your machine.
--   Open **Command Prompt** into you machine, then clone the repository by copy and past the link bellow into **Command Prompt**
+-   Open **Command Prompt** into you machine, then clone the repository by copy and past the text bellow into **Command Prompt**
 
 ```
 git clone https://github.com/mahmoudkandel980/Enhance-Google-Search.git
