@@ -1,42 +1,38 @@
 /**
- * Prepares a link based on the specified type.
+ * Formats a breadcrumb string, truncating it if necessary.
  *
- * @param {string} url - The URL string to prepare the link from.
- * @param {number} start - The starting index for slicing the URL.
- * @param {number} end - The ending index for slicing the URL.
- * @param {"main" | "secondary" | "tertiary"} type - The type of link to prepare.
- * @returns {string | null} The prepared link based on the specified type, or null if the link is invalid.
+ * @param {string} breadCramp The breadcrumb string to be formatted.
+ * @returns {string | null} The formatted breadcrumb string, or null if the breadcrumb value is empty.
+ */
+const formatbeadCaramps = (breadCramp: string): string | null => {
+    if (breadCramp) {
+        if (breadCramp.length > 10) {
+            return breadCramp.slice(0, 10) + "...";
+        }
+        return breadCramp;
+    } else {
+        return null;
+    }
+};
+
+/**
+ * Prepares link data by extracting origin and breadcrumb information from the URL.
  *
- * This function prepares a link based on the specified type:
- *   - For type "main", it returns the link as is.
- *   - For types "secondary" or "tertiary", it checks the length of the link.
- *     - If the link has a length greater than 10 characters, it returns the first 10 characters followed by "...".
- *     - If the link has a length less than or equal to 10 characters, it returns the link as is.
- *   - If the link is null or undefined, it returns null.
+ * @param {string} url The URL from which to extract link data.
+ * @returns {{ origin: string | null; firstBreadCramp: string | null; secondBreadCramp: string | null }} An object containing the origin and breadcrumb information.
  */
 export const prepareLink = (
-    url: string,
-    start: number,
-    end: number,
-    type: "main" | "secondary" | "tertiary"
-): string | null => {
-    const link = url?.split("/").slice(start, end).join("/");
+    url: string
+): {
+    origin: string | null;
+    firstBreadCramp: string | null;
+    secondBreadCramp: string | null;
+} => {
+    const linkUrl = new URL(url);
+    const { origin, pathname } = linkUrl;
+    const breadCramps = pathname.split("/");
+    const firstBreadCramp = formatbeadCaramps(breadCramps[0]);
+    const secondBreadCramp = formatbeadCaramps(breadCramps[1]);
 
-    switch (type) {
-        case "main":
-            return link;
-        case "secondary":
-        case "tertiary":
-            if (link) {
-                if (link.length > 10) {
-                    return link.substring(0, 10) + "...";
-                } else {
-                    return link;
-                }
-            } else {
-                return null;
-            }
-        default:
-            return null;
-    }
+    return { origin, firstBreadCramp, secondBreadCramp };
 };

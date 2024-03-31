@@ -3,14 +3,10 @@ import { fetchMediaList } from "../api";
 import { resultCard, notFound } from "../components/serp";
 
 /**
- * Shows search results in the provided container based on the specified number of results per page.
+ * Retrieves and displays search/query results within the specified container.
  *
- * @param {HTMLDivElement} container - The container element where search results will be displayed.
- * @param {number} resultsPerPage - The number of search results to display per page.
- *
- * This function asynchronously fetches additional search/query results from the API based on the provided search query value.
- * If no results are found, it displays a "not found" message in the container.
- * Otherwise, it dynamically populates the container with result cards based on the fetched search results.
+ * @param {HTMLDivElement} container The container where search results will be displayed.
+ * @param {ExtensionSettings["resultsPerPage"]} resultsPerPage The number of search results to display per page.
  */
 export const showResults = async (
     container: HTMLDivElement,

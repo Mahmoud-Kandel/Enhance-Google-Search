@@ -2,13 +2,10 @@ import { ExtensionSettings } from "../@types";
 import { loadingCard } from "../components/serp";
 
 /**
- * Shows loading cards in the provided container based on the specified number of results per page.
+ * Generates and displays loading cards within the specified container.
  *
- * @param {HTMLDivElement} container - The container element where loading cards will be displayed.
- * @param {number} resultsPerPage - The number of loading cards to display.
- *
- * This function dynamically populates the provided container with loading cards based on the specified number of results per page.
- * It generates loading cards using the loadingCard template and fills the container with them.
+ * @param {HTMLDivElement} container The container where loading cards will be displayed.
+ * @param {ExtensionSettings["resultsPerPage"]} resultsPerPage The number of loading cards to display.
  */
 export const showLoadingCards = (
     container: HTMLDivElement,
