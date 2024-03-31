@@ -47,15 +47,9 @@ export const resultCard = (media: IModifiedMediaDetails): string => {
                />
             </div>
             <div class="card_header-Content">
-               <div class="card_header-Content--header-container">
-                  <span class="card_header-Content--header">${
-                      IMDB_DATA.name
-                  }</span>
-                  <div class="card_header-Content--header--type">
-                     <div class="card_header-icon_container--type type-${type}"></div>
-                     <div>${type}</div>
-                  </div>
-               </div>
+               <span class="card_header-Content--header">${
+                   IMDB_DATA.name
+               }</span>
                <div class="card_header-Content--content">
                   <cite>
                      <span dir="ltr">${mediaData.url.origin}</span>
@@ -85,6 +79,10 @@ export const resultCard = (media: IModifiedMediaDetails): string => {
     }</a>
          <div class="card_header-description">
             <span>${mediaData.overview}</span>
+            <div class='card_description--type'>
+               <div class='card_description--type--icon type-${type}'></div>
+               <div>${type}</div>
+         </div>
          </div>
       </div>
       <a href="${mediaData.url.websiteLink}" class="card_image_container">
