@@ -4,10 +4,12 @@
  * @param {string} breadCramp The breadcrumb string to be formatted.
  * @returns {string | null} The formatted breadcrumb string, or null if the breadcrumb value is empty.
  */
-const formatbeadCaramps = (breadCramp: string): string | null => {
+export const formatbeadCaramps = (breadCramp: string | null): string | null => {
     if (breadCramp) {
         if (breadCramp.length > 10) {
             return breadCramp.slice(0, 10) + "...";
+        } else if (breadCramp.length === 0) {
+            return null;
         }
         return breadCramp;
     } else {
@@ -28,11 +30,15 @@ export const prepareLink = (
     firstBreadCramp: string | null;
     secondBreadCramp: string | null;
 } => {
-    const linkUrl = new URL(url);
-    const { origin, pathname } = linkUrl;
-    const breadCramps = pathname.split("/");
-    const firstBreadCramp = formatbeadCaramps(breadCramps[0]);
-    const secondBreadCramp = formatbeadCaramps(breadCramps[1]);
+    try {
+        const linkUrl = new URL(url);
+        const { origin, pathname } = linkUrl;
+        const breadCramps = pathname.split("/");
+        const firstBreadCramp = formatbeadCaramps(breadCramps[1]);
+        const secondBreadCramp = formatbeadCaramps(breadCramps[2]);
 
-    return { origin, firstBreadCramp, secondBreadCramp };
+        return { origin, firstBreadCramp, secondBreadCramp };
+    } catch (err) {
+        return { origin: "", firstBreadCramp: null, secondBreadCramp: null };
+    }
 };
