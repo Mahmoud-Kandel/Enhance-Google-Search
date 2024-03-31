@@ -3,6 +3,9 @@
     --background-default: #fff;
     --text-color-default: #1a1a1a;
     --extension-color: #f3b700;
+    --community: #f3b700;
+    --verified: #4caf50;
+    --unverified: #f44336;
 }
 
 @media (prefers-color-scheme: dark) {
