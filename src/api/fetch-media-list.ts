@@ -9,20 +9,11 @@ import {
 } from "../@types";
 
 /**
- * Fetches a list of media items asynchronously based on a search query.
+ * Fetches and modifies a list of media based on the provided search query and results per page.
  *
- * @param {string} searchQuery - The search query for filtering media items.
- * @param {ExtensionSettings["resultsPerPage"]} resultsPerPage - The number of results per page.
- * @returns {Promise<IModifiedMediaDetails[]>} A Promise resolving to an array of modified media details.
- *
- * This function makes an asynchronous HTTP GET request to fetch a list of media items from the server using Axios.
- * It filters the fetched data to include only media items that meet certain criteria:
- *   - Must be of type "tv" or "movie".
- *   - Must have a non-empty overview.
- *   - Must have a non-empty backdrop_path or poster_path.
- * For each filtered media item, it fetches its details using the fetchMediaDetails function.
- * It further filters the fetched media details to include only items with a non-empty homepage.
- * Finally, it returns an array of modified media details, limited to the specified number of results per page.
+ * @param {string} searchQuery The search query used to fetch media list.
+ * @param {ExtensionSettings["resultsPerPage"]} resultsPerPage The number of results.
+ * @returns {Promise<IModifiedMediaDetails[]>} A promise resolving to the modified list of media details.
  */
 export const fetchMediaList = async (
     searchQuery: string,
@@ -53,7 +44,12 @@ export const fetchMediaList = async (
 
     const modifiedMediaDetailsList = mediaDetailsList
         .filter((media) => {
-            if (media.homepage && media.homepage?.length > 0) {
+            const { homepage, poster_path, backdrop_path } = media;
+            if (
+                homepage &&
+                homepage?.length > 0 &&
+                (poster_path || backdrop_path)
+            ) {
                 return media;
             } else {
                 return false;

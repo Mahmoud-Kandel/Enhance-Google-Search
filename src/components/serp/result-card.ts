@@ -2,6 +2,12 @@ import { IModifiedMediaDetails } from "../../@types";
 import { MEDIA_CONSTANTS, IMDB_DATA } from "../../constants";
 import { prepareLink } from "../../utils";
 
+/**
+ * Generates HTML content for a result card based on the provided media details.
+ *
+ * @param {IModifiedMediaDetails} media The media details used to populate the card.
+ * @returns {string} HTML content representing the result card.
+ */
 export const resultCard = (media: IModifiedMediaDetails): string => {
     const {
         poster_path,
@@ -15,15 +21,17 @@ export const resultCard = (media: IModifiedMediaDetails): string => {
         type,
     } = media;
 
+    const { origin, firstBreadCramp, secondBreadCramp } = prepareLink(homepage);
+
     const mediaData = {
         image: MEDIA_CONSTANTS.apiImageUrl + poster_path || backdrop_path,
         title: original_name || name || original_title || title,
         overview: overview?.substring(0, 120) + "..." || "",
         url: {
             websiteLink: homepage,
-            main: prepareLink(homepage, 0, 3, "main"),
-            secondary: prepareLink(homepage, 3, 4, "secondary"),
-            tertiary: prepareLink(homepage, 4, 5, "tertiary"),
+            origin,
+            firstBreadCramp,
+            secondBreadCramp,
         },
     };
 
@@ -50,14 +58,16 @@ export const resultCard = (media: IModifiedMediaDetails): string => {
                </div>
                <div class="card_header-Content--content">
                   <cite>
-                     <span dir="ltr">${mediaData.url.main}</span>
+                     <span dir="ltr">${mediaData.url.origin}</span>
                      ${
-                         mediaData.url.secondary
+                         mediaData.url.firstBreadCramp
                              ? `<span class="ylgVCe ob9lvb" role="text">
                            ›
-                           <span dir="ltr">${mediaData.url.secondary}</span>
+                           <span dir="ltr">${
+                               mediaData.url.firstBreadCramp
+                           }</span>
                            ${
-                               mediaData.url.tertiary
+                               mediaData.url.secondBreadCramp
                                    ? `
                            › ${mediaData.title}
                            `

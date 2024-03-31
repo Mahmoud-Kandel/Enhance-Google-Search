@@ -5,16 +5,18 @@ import { getExtensionStorageValues } from "../utils";
 import { showLoadingCards, showResults } from ".";
 
 /**
- * Immediately invoked function expression (IIFE) to modify search results.
+ * * Immediately invoked function expression (IIFE) to modify search results.
  *
- * This function executes immediately to modify search results on the current page.
- * It first shows the extension view, sets the theme configuration based on the page's background color,
- * creates a container for injected search results, and inserts it into the DOM.
- * Then, it retrieves extension settings from storage, shows loading UI if the extension is active,
- * and modifies search results if they are found.
+ * Initializes the extension functionality:
+ * - Displays the extension view.
+ * - Determines the page theme (light or dark).
+ * - Injects additional search results into the search engine results page (SERP).
+ * - Retrieves extension settings from storage.
+ * - Shows loading UI based on the extension's active state.
+ * - Modifies search results if found and the extension is active.
  */
 (async () => {
-    // Show extension view
+    // Load Extension Storage data and manipulate Extension View on DOM
     await showExtensionView();
 
     // theme Config

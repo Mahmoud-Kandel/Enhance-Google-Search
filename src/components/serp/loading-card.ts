@@ -1,3 +1,8 @@
+/**
+ * HTML template for a loading card, typically used during data loading.
+ *
+ * @returns {string} HTML content representing a loading card.
+ */
 export const loadingCard = `
     <div class="card">
     <div class="card_content">

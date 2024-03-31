@@ -5,58 +5,35 @@ import {
 } from "../../utils/";
 
 /**
- * Shows the extension view with dynamic content and functionality.
+ * Displays the extension view with dynamic content and functionality.
+ * - Listens for DOMContentLoaded event to initialize the view and retrieve extension storage values.
+ * - Updates extension view dynamically based on stored values.
+ * - Handles user interactions for range input and checkbox.
+ * - Updates browser storage when range input value or checkbox state changes.
  *
- * @returns {void} This function doesn't return anything directly.
- *
- * This function attaches an event listener for when the DOM content is fully loaded.
- * Upon DOMContentLoaded event, it retrieves extension storage values asynchronously.
- * It initializes the extension view dynamically by updating the container's inner HTML.
- * It sets up event listeners for the range input and checkbox to handle user interactions.
- * When the range input value changes, it updates the display and stores the new value in browser storage.
- * When the checkbox state changes, it toggles the extension's active state and updates browser storage accordingly.
+ * @returns {Promise<void>} Promise resolving to void.
  */
 export const showExtensionView = async (): Promise<void> => {
     document.addEventListener("DOMContentLoaded", async function () {
-        // get extension element from DOM by id
-        const container = document.getElementById(
-            "extension"
-        ) as HTMLDivElement;
-
         const { active, resultsPerPage } = await getExtensionStorageValues();
 
-        // initialize extension view
-        container.innerHTML = `
-        <h1>IMDB</h1>
-        <p>
-            IMDB is your go-to browser extension for enhancing search engine
-            results. Instantly access comprehensive information on movies
-            and series without leaving your search page.
-        </p>
-        <div class="results-per-page-container">
-            <span class="results-per-page">Results Per Page: <span>${resultsPerPage}</span></span>
-            <input id="rangeInput" type="range" min="1" max="20" value="${resultsPerPage}" />
-        </div>
-        <label class="switch">
-        ${
-            active
-                ? `<input type="checkbox" checked />`
-                : `<input type="checkbox" />`
-        }
-            <span class="slider round"></span>
-        </label>
-        `;
-
-        // get extension two inputs (range and checkbox)from DOM
+        // get extension two inputs (range and checkbox) , counter and counter from DOM
         const rangeInput = document.getElementById(
                 "rangeInput"
             ) as HTMLInputElement,
-            counter = document.querySelector(
-                ".results-per-page span"
-            ) as HTMLSpanElement,
             toggleExtension = document.querySelector(
                 "input[type=checkbox]"
-            ) as HTMLInputElement;
+            ) as HTMLInputElement,
+            container = document.getElementById("extension") as HTMLDivElement,
+            counter = document.querySelector(
+                ".results-per-page span"
+            ) as HTMLSpanElement;
+
+        // Log Storage Values
+        rangeInput.value = resultsPerPage.toString();
+        counter.textContent = resultsPerPage.toString();
+        toggleExtension.checked = active;
+        toggleExtension.checked && container.classList.add("active");
 
         // Update the display of results per page
         rangeInput.addEventListener("input", async () => {
@@ -72,12 +49,8 @@ export const showExtensionView = async (): Promise<void> => {
         // Update Enable and Disable Extension
         toggleExtension.addEventListener("change", async () => {
             let checked = true;
-            if (toggleExtension.checked) {
-                container.classList.add("active");
-            } else {
-                container.classList.remove("active");
-                checked = false;
-            }
+            if (!toggleExtension.checked) checked = false;
+            container.classList.toggle("active");
             await setBrowserStorageValue(
                 StorageKeys.active,
                 checked,
