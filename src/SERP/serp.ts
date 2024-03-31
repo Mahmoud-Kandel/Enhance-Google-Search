@@ -1,50 +1,18 @@
-import { PageTheme, ExtensionSettings } from "../@types";
-import { fetchMediaList } from "../api";
+import { PageTheme } from "../@types";
 import { CONTAINER_CLASS } from "../constants";
-import { loadingCard, resultCard, notFound } from "../components/serp";
 import { showExtensionView } from "../components/extension";
 import { getExtensionStorageValues } from "../utils";
+import { showLoadingCards, showResults } from ".";
 
-const showLoadingCards = (
-    container: HTMLDivElement,
-    resultsPerPage: ExtensionSettings["resultsPerPage"]
-) => {
-    container.innerHTML = `
-    ${new Array(resultsPerPage)
-        .fill("")
-        .map(() => loadingCard)
-        .join("")}
-    `;
-};
-
-export const showResults = async (
-    container: HTMLDivElement,
-    resultsPerPage: ExtensionSettings["resultsPerPage"]
-) => {
-    // Search input Value
-    const searchQueryValue: string = (
-        document.getElementsByTagName("textarea")[0] as HTMLTextAreaElement
-    ).value;
-
-    // Fetch additional search/query results from the API
-    const mediaListData = await fetchMediaList(
-        searchQueryValue,
-        resultsPerPage
-    );
-
-    if (mediaListData.length === 0) {
-        container.innerHTML = notFound(searchQueryValue);
-    } else {
-        // Present the search results on the SERP
-        setTimeout(() => {
-            container.innerHTML = `
-                ${mediaListData.map((media) => resultCard(media)).join("")}
-                `;
-        }, 1000);
-    }
-};
-
-// Immediately invoked function expression (IIFE) to modify search results
+/**
+ * Immediately invoked function expression (IIFE) to modify search results.
+ *
+ * This function executes immediately to modify search results on the current page.
+ * It first shows the extension view, sets the theme configuration based on the page's background color,
+ * creates a container for injected search results, and inserts it into the DOM.
+ * Then, it retrieves extension settings from storage, shows loading UI if the extension is active,
+ * and modifies search results if they are found.
+ */
 (async () => {
     // Show extension view
     await showExtensionView();

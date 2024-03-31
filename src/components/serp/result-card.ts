@@ -1,8 +1,8 @@
-import { IMediaDetails } from "../../@types";
+import { IModifiedMediaDetails } from "../../@types";
 import { MEDIA_CONSTANTS, IMDB_DATA } from "../../constants";
 import { prepareLink } from "../../utils";
 
-export const resultCard = (media: IMediaDetails): string => {
+export const resultCard = (media: IModifiedMediaDetails): string => {
     const {
         poster_path,
         backdrop_path,
@@ -12,6 +12,7 @@ export const resultCard = (media: IMediaDetails): string => {
         title,
         overview,
         homepage,
+        type,
     } = media;
 
     const mediaData = {
@@ -38,9 +39,15 @@ export const resultCard = (media: IMediaDetails): string => {
                />
             </div>
             <div class="card_header-Content">
-               <span class="card_header-Content--header">${
-                   IMDB_DATA.name
-               }</span>
+               <div class="card_header-Content--header-container">
+                  <span class="card_header-Content--header">${
+                      IMDB_DATA.name
+                  }</span>
+                  <div class="card_header-Content--header--type">
+                     <div class="card_header-icon_container--type type-${type}"></div>
+                     <div>${type}</div>
+                  </div>
+               </div>
                <div class="card_header-Content--content">
                   <cite>
                      <span dir="ltr">${mediaData.url.main}</span>

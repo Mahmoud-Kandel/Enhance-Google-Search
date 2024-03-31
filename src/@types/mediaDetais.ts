@@ -31,3 +31,7 @@ export interface IMediaDetails extends Omit<IMedia, "media_type"> {
         season_number: number;
     }[];
 }
+
+export interface IModifiedMediaDetails extends IMediaDetails {
+    type: "community" | "verified" | "unverified ";
+}
