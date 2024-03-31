@@ -83,7 +83,12 @@ chrome://extensions/
     ![results cards](./public/images/result-cards.png)
     ![not found results](./public/images/not-found-results.png)
 
-## Create VITE_API_KEY
+<br/>
+<br/>
+
+## Optional
+
+**Create VITE_API_KEY**
 
 -   Please go to this link below and create an acount in TMDB.
 
